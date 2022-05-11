@@ -22,16 +22,24 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.kord:kord-core:0.8.0-M13")
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
+    implementation("ch.qos.logback:logback-classic:1.2.11")
+    implementation("mysql:mysql-connector-java:8.0.29")
     implementation("org.jetbrains.exposed:exposed-core:0.38.2")
     implementation("org.jetbrains.exposed:exposed-dao:0.38.2")
     implementation("org.jetbrains.exposed:exposed-jdbc:0.38.2")
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:0.38.2")
+    implementation("dev.kord:kord-core:0.8.0-M13")
+    testImplementation(kotlin("test"))
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+}
+
+application {
+    this.mainClass.set("net.javaman.guavapicker.MainKt")
 }
 
 flyway {
@@ -42,4 +50,8 @@ flyway {
 
 dockerCompose {
     useComposeFiles.add("docker-compose.yml")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
