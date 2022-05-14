@@ -1,35 +1,28 @@
 package net.javaman.guavapicker
 
-import dev.kord.common.Color
 import dev.kord.core.Kord
+import dev.kord.core.behavior.interaction.response.DeferredEphemeralMessageInteractionResponseBehavior
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
-import dev.kord.rest.builder.message.EmbedBuilder
+import kotlinx.serialization.json.Json
 import mu.KotlinLogging
+
+val serializer = Json { ignoreUnknownKeys = true }
 
 private val logger = KotlinLogging.logger {}
 
-suspend fun startDiscord(): Kord {
+suspend fun startDiscord(builder: suspend Kord.() -> Unit) = with(Kord(System.getenv("GUAVA_DISCORD_TOKEN"))) {
     logger.info { "Starting Discord client" }
-    return Kord(System.getenv("GUAVA_DISCORD_TOKEN"))
-}
-
-suspend fun logIntoDiscord(kord: Kord) {
+    builder()
     logger.info { "Logging in Discord client" }
-    kord.login {
+    login {
         @OptIn(PrivilegedIntent::class)
         intents += Intent.MessageContent
     }
 }
 
-fun embedTemplate(header: String? = null, message: String? = null): EmbedBuilder.() -> Unit = {
-    color = Color(209, 96, 86)
-    header?.let {
-        author {
-            name = it
-        }
-    }
-    message?.let {
-        description = it
-    }
-}
+class GuavaPickerException(message: String) : Exception(message)
+
+typealias Handler<T> = suspend T.() -> Unit
+
+typealias ResponseHandler<T> = suspend T.(DeferredEphemeralMessageInteractionResponseBehavior) -> Unit
