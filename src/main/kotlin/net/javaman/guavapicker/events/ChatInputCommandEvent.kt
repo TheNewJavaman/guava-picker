@@ -1,7 +1,7 @@
-package net.javaman.guavapicker.discord.events
+package net.javaman.guavapicker.events
 
 import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
-import net.javaman.guavapicker.discord.interactions.CreateInteraction
+import net.javaman.guavapicker.interactions.CreateInteraction
 
 object ChatInputCommandEvent {
     val handle: suspend ChatInputCommandInteractionCreateEvent.() -> Unit = {
