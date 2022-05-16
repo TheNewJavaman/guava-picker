@@ -19,11 +19,13 @@ open class OCustomIdModel(
  */
 @Serializable(with = CustomIdSerializer::class)
 enum class CustomId(val id: Int) {
-    ROLE_BUTTON(1);
+    TOGGLE_ROLE_BUTTON(1),
+    CONTINUE_ADD_ROLE_BUTTON(2),
+    FINISH_ADD_ROLE_BUTTON(3);
 
     companion object {
         fun valueOf(id: Int) = when (id) {
-            ROLE_BUTTON.id -> ROLE_BUTTON
+            TOGGLE_ROLE_BUTTON.id -> TOGGLE_ROLE_BUTTON
             else -> throw IllegalStateException("CustomId(id=$id) does not exist")
         }
     }

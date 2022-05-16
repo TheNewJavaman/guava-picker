@@ -5,10 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RoleButtonModel(
+class ToggleRoleButtonModel(
     @SerialName("r")
-    val role: Snowflake,
-
-    @SerialName("l")
-    val label: String
-) : OCustomIdModel(CustomId.ROLE_BUTTON)
+    val role: Snowflake
+) : OCustomIdModel(CustomId.TOGGLE_ROLE_BUTTON)

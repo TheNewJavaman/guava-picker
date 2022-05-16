@@ -7,7 +7,6 @@ import dev.kord.core.builder.components.emoji
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
 import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.mentionable
 import dev.kord.rest.builder.interaction.role
 import dev.kord.rest.builder.interaction.string
 import dev.kord.rest.builder.message.create.actionRow
@@ -16,11 +15,11 @@ import dev.kord.rest.builder.message.modify.embed
 import kotlinx.serialization.encodeToString
 import net.javaman.guavapicker.GuavaPickerException
 import net.javaman.guavapicker.ResponseHandler
-import net.javaman.guavapicker.models.RoleButtonModel
+import net.javaman.guavapicker.models.ToggleRoleButtonModel
 import net.javaman.guavapicker.serializer
 import net.javaman.guavapicker.templates.EmbedTemplate
 
-object CreateInteraction : IInteraction<ChatInputCommandInteractionCreateEvent> {
+object CreateCommandInteraction : IInteraction<ChatInputCommandInteractionCreateEvent> {
     const val name = "create"
     const val description = "Create a role picker with one button"
 
@@ -29,7 +28,6 @@ object CreateInteraction : IInteraction<ChatInputCommandInteractionCreateEvent> 
         role("role", "The role to toggle") {
             required = true
         }
-        this.mentionable("s", "s")
         string("header", "A header at the top; defaults to no header") {
             required = false
         }
@@ -50,13 +48,12 @@ object CreateInteraction : IInteraction<ChatInputCommandInteractionCreateEvent> 
         val label = interaction.command.strings["label"] ?: role.name
         val header = interaction.command.strings["header"]
         val message = interaction.command.strings["message"]
-        val model = RoleButtonModel(role.id, label)
         interaction.channel.createMessage {
             if (header != null || message != null) {
                 embed(EmbedTemplate(header, message))
             }
             actionRow {
-                interactionButton(ButtonStyle.Secondary, serializer.encodeToString(model)) {
+                interactionButton(ButtonStyle.Secondary, serializer.encodeToString(ToggleRoleButtonModel(role.id))) {
                     this.label = label
                     interaction.command.strings["emoji"]?.let {
                         emoji(ReactionEmoji.Unicode(it))

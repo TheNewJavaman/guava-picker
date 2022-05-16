@@ -17,6 +17,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
     implementation("ch.qos.logback:logback-classic:1.2.11")
     implementation("dev.kord:kord-core:0.8.0-M13")
+    implementation("aws.sdk.kotlin:dynamodb:0.15.0")
     testImplementation(kotlin("test"))
 }
 

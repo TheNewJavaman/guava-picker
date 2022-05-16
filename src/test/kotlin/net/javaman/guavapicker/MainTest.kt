@@ -9,8 +9,8 @@ import kotlinx.coroutines.runBlocking
 import net.javaman.guavapicker.events.ButtonEvent
 import net.javaman.guavapicker.events.ChatInputCommandEvent
 import net.javaman.guavapicker.events.MessageCommandEvent
-import net.javaman.guavapicker.interactions.AddRoleInteraction
-import net.javaman.guavapicker.interactions.CreateInteraction
+import net.javaman.guavapicker.interactions.AddRoleSelectMenuInteraction
+import net.javaman.guavapicker.interactions.CreateCommandInteraction
 import org.junit.jupiter.api.Test
 
 class MainTest {
@@ -23,11 +23,11 @@ class MainTest {
         startDiscord {
             createGuildChatInputCommand(
                 guild,
-                CreateInteraction.name,
-                CreateInteraction.description,
-                CreateInteraction.builder
+                CreateCommandInteraction.name,
+                CreateCommandInteraction.description,
+                CreateCommandInteraction.builder
             )
-            createGuildMessageCommand(guild, AddRoleInteraction.name, AddRoleInteraction.builder)
+            createGuildMessageCommand(guild, AddRoleSelectMenuInteraction.name, AddRoleSelectMenuInteraction.builder)
             on<GuildChatInputCommandInteractionCreateEvent>(this, ChatInputCommandEvent.handler)
             on<GuildButtonInteractionCreateEvent>(this, ButtonEvent.handler)
             on<GuildMessageCommandInteractionCreateEvent>(this, MessageCommandEvent.handler)
