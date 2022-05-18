@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.interactions
+package net.javaman.guavapicker.old.interactions
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.TextInputStyle

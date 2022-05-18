@@ -3,7 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     kotlin("jvm") version "1.6.21"
-    kotlin("plugin.serialization") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.21"
+    id("com.avast.gradle.docker-compose") version "0.15.2"
 }
 
 group = "net.javaman"
@@ -18,6 +19,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.11")
     implementation("dev.kord:kord-core:0.8.0-M13")
     implementation("aws.sdk.kotlin:dynamodb:0.15.0")
+    implementation(kotlin("reflect"))
     testImplementation(kotlin("test"))
 }
 
@@ -28,6 +30,11 @@ tasks.withType<KotlinCompile> {
 
 application {
     this.mainClass.set("net.javaman.guavapicker.MainKt")
+}
+
+
+dockerCompose {
+    useComposeFiles.add("docker-compose-test.yml")
 }
 
 tasks.test {

@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.models
+package net.javaman.guavapicker.old.models
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName

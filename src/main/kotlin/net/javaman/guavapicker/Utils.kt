@@ -11,8 +11,6 @@ import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import net.javaman.guavapicker.templates.ErrorTemplate
 
-val serializer = Json { ignoreUnknownKeys = true }
-
 private val logger = KotlinLogging.logger {}
 
 suspend fun startDiscord(builder: suspend Kord.() -> Unit) = with(Kord(System.getenv("GUAVA_DISCORD_TOKEN"))) {
@@ -25,7 +23,7 @@ suspend fun startDiscord(builder: suspend Kord.() -> Unit) = with(Kord(System.ge
     }
 }
 
-fun <T : ActionInteractionCreateEvent> T.deferredEphemeralResponse(block: ResponseHandler<T>): Handler<T> = {
+fun <T : ActionInteractionCreateEvent> T.catchingResponse(block: ResponseHandler<T>): Handler<T> = {
     val response = interaction.deferEphemeralResponse()
     try {
         block(response)
@@ -36,8 +34,13 @@ fun <T : ActionInteractionCreateEvent> T.deferredEphemeralResponse(block: Respon
     }
 }
 
-class GuavaPickerException(message: String) : Exception(message)
+fun <T : ActionInteractionCreateEvent> T.instantEphemeralResponse(block: Handler<T>): Handler<T> = {
+    try {
+        block()
+    } catch (e: Exception) {
+        val uuid = UUID.randomUUID()
+        interaction.deferEphemeralResponse().respond(ErrorTemplate(e, uuid))
+        logger.error(e) { "UUID: $uuid" }
+    }
+}
 
-typealias Handler<T> = suspend T.() -> Unit
-
-typealias ResponseHandler<T> = suspend T.(DeferredEphemeralMessageInteractionResponseBehavior) -> Unit

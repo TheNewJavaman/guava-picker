@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.interactions
+package net.javaman.guavapicker.old.interactions
 
 import dev.kord.core.behavior.interaction.response.respond
 import dev.kord.core.event.interaction.MessageCommandInteractionCreateEvent

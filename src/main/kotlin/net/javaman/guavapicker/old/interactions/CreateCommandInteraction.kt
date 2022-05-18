@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.interactions
+package net.javaman.guavapicker.old.interactions
 
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.core.behavior.channel.createMessage
@@ -15,7 +15,7 @@ import dev.kord.rest.builder.message.modify.embed
 import kotlinx.serialization.encodeToString
 import net.javaman.guavapicker.GuavaPickerException
 import net.javaman.guavapicker.ResponseHandler
-import net.javaman.guavapicker.models.ToggleRoleButtonModel
+import net.javaman.guavapicker.old.models.ToggleRoleButtonModel
 import net.javaman.guavapicker.serializer
 import net.javaman.guavapicker.templates.EmbedTemplate
 
