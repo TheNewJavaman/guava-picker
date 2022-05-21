@@ -20,7 +20,7 @@ class DynamoDBTest {
             region = "us-west-1"
         }
         val messageId = Snowflake(now())
-        val original =             RoleToggleMessage(
+        val original = RoleToggleMessage(
             messageId,
             List(3) {
                 RoleToggleButton(

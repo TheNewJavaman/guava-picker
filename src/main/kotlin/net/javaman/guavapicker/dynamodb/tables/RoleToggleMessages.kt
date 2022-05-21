@@ -17,7 +17,7 @@ object RoleToggleMessages {
 
     suspend fun get(messageId: Snowflake) = ddbClient.getItem {
         tableName = TABLE_NAME
-        key = mutableMapOf("message_id" to AttributeValue.N(messageId.value.toString()))
-        projectionExpression = "buttons, header, body"
+        key = mutableMapOf("message_id" to AttributeValue.S(messageId.value.toString()))
+        projectionExpression = listOf("buttons", "header", "body").joinToString(", ")
     }.let { RoleToggleMessage.fromItem(messageId, it.item!!) }
 }

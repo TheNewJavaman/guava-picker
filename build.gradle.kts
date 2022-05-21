@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "net.javaman"
-version = "1.0-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -17,9 +17,11 @@ repositories {
 dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.21")
     implementation("ch.qos.logback:logback-classic:1.2.11")
-    implementation("dev.kord:kord-core:0.8.0-M13")
     implementation("aws.sdk.kotlin:dynamodb:0.15.0")
-    implementation(kotlin("reflect"))
+    implementation("dev.kord:kord-core:0.8.0-M13")
+    constraints {
+        implementation("io.ktor:ktor-client-okhttp:2.0.0")
+    }
     testImplementation(kotlin("test"))
 }
 
@@ -31,7 +33,6 @@ tasks.withType<KotlinCompile> {
 application {
     this.mainClass.set("net.javaman.guavapicker.MainKt")
 }
-
 
 dockerCompose {
     useComposeFiles.add("docker-compose-test.yml")
