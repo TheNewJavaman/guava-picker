@@ -4,10 +4,9 @@ import aws.sdk.kotlin.runtime.endpoint.AwsEndpoint
 import aws.sdk.kotlin.runtime.endpoint.StaticEndpointResolver
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
 import dev.kord.core.on
 import kotlinx.coroutines.runBlocking
-import net.javaman.guavapicker.discord.events.ChatInputCommandEvent
+import net.javaman.guavapicker.discord.handlers.chatInputCommandHandler
 import net.javaman.guavapicker.discord.interactions.CreateInteraction
 import net.javaman.guavapicker.discord.startDiscord
 import net.javaman.guavapicker.dynamodb.ddbClient
@@ -31,7 +30,7 @@ class MainTest {
                 CreateInteraction.DESCRIPTION,
                 CreateInteraction.builder
             )
-            on(this, ChatInputCommandEvent.handler)
+            on(this, chatInputCommandHandler)
         }
     }
 }

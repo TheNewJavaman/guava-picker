@@ -7,13 +7,14 @@ import net.javaman.guavapicker.dynamodb.getList
 import net.javaman.guavapicker.dynamodb.getNullableString
 import net.javaman.guavapicker.dynamodb.getSnowflake
 import net.javaman.guavapicker.dynamodb.getString
+import net.javaman.guavapicker.dynamodb.toAttributeValueMap
 
 data class RoleToggleMessage(
-    val messageId: Snowflake,
+    val messageId: Snowflake? = null,
     val buttons: List<RoleToggleButton> = emptyList(),
     val header: String? = null,
     val body: String? = null
-) : Item {
+) {
     companion object {
         fun fromItem(messageId: Snowflake, item: Map<String, AttributeValue>) = RoleToggleMessage(
             messageId = messageId,
@@ -23,9 +24,9 @@ data class RoleToggleMessage(
         )
     }
 
-    override fun toItem() = mapOf(
+    fun toItem() = mapOf(
         messageId asAttribute "message_id",
-        buttons asAttribute "buttons",
+        buttons.map { it.toItem().toAttributeValueMap() } asAttribute "buttons",
         header asAttribute "header",
         body asAttribute "body"
     )
@@ -35,7 +36,7 @@ data class RoleToggleButton(
     val roleId: Snowflake,
     val label: String,
     val emoji: String? = null
-) : Item {
+) {
     companion object {
         fun fromItem(item: Map<String, AttributeValue>) = RoleToggleButton(
             roleId = item.getSnowflake("role_id"),
@@ -44,7 +45,7 @@ data class RoleToggleButton(
         )
     }
 
-    override fun toItem() = mapOf(
+    fun toItem() = mapOf(
         roleId asAttribute "role_id",
         label asAttribute "label",
         emoji asAttribute "emoji"

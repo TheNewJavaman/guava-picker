@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import net.javaman.guavapicker.dynamodb.ddbClient
 import net.javaman.guavapicker.dynamodb.items.RoleToggleMessage
 
-object RoleToggleMessages {
+object RoleToggleMessagesTable {
     private const val TABLE_NAME = "role_toggle_messages"
 
     suspend fun put(item: RoleToggleMessage) {

@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock.System.now
 import net.javaman.guavapicker.dynamodb.items.RoleToggleButton
 import net.javaman.guavapicker.dynamodb.items.RoleToggleMessage
-import net.javaman.guavapicker.dynamodb.tables.RoleToggleMessages
+import net.javaman.guavapicker.dynamodb.tables.RoleToggleMessagesTable
 import org.junit.jupiter.api.Test
 
 class DynamoDBTest {
@@ -32,8 +32,8 @@ class DynamoDBTest {
             "Header goes here",
             // Intentionally null body string
         )
-        RoleToggleMessages.put(original)
-        val saved = RoleToggleMessages.get(messageId)
+        RoleToggleMessagesTable.put(original)
+        val saved = RoleToggleMessagesTable.get(messageId)
         assertEquals(original, saved)
     }
 }

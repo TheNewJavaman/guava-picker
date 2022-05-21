@@ -6,15 +6,14 @@ import dev.kord.core.behavior.interaction.respondEphemeral
 import dev.kord.core.event.interaction.ActionInteractionCreateEvent
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
-import dev.kord.rest.builder.message.create.embed
 import java.util.UUID
 import mu.KotlinLogging
+import net.javaman.guavapicker.discord.templates.errorTemplate
 
 private val logger = KotlinLogging.logger {}
 
 suspend fun startDiscord(builder: suspend Kord.() -> Unit) {
-    val kord = Kord(System.getenv("GUAVA_DISCORD_TOKEN")) {
-    }
+    val kord = Kord(System.getenv("GUAVA_DISCORD_TOKEN"))
     logger.info { "Starting Discord client" }
     kord.builder()
     logger.info { "Logging in Discord client" }
@@ -34,14 +33,6 @@ suspend fun <T : ActionInteractionCreateEvent> T.handlingExceptions(block: Handl
     } catch (e: Exception) {
         val uuid = UUID.randomUUID()
         logger.error(e) { "UUID: $uuid" }
-        interaction.respondEphemeral {
-            embed {
-                color = embedColor
-                author {
-                    name = "Something went wrong"
-                }
-                description = e.message
-            }
-        }
+        interaction.respondEphemeral(errorTemplate(e))
     }
 }

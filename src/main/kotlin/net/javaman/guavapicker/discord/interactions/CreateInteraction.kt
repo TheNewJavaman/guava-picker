@@ -4,7 +4,7 @@ import dev.kord.core.behavior.interaction.modal
 import dev.kord.core.event.interaction.ChatInputCommandInteractionCreateEvent
 import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
 import net.javaman.guavapicker.discord.Handler
-import net.javaman.guavapicker.discord.templates.DescriptionModalTemplate
+import net.javaman.guavapicker.discord.templates.roleToggleDescriptionTemplate
 
 object CreateInteraction {
     const val NAME = "create"
@@ -13,6 +13,6 @@ object CreateInteraction {
     val builder: ChatInputCreateBuilder.() -> Unit = {}
 
     val handler: Handler<ChatInputCommandInteractionCreateEvent> = {
-        interaction.modal("Write a description", CreateDescriptionInteraction.ID, DescriptionModalTemplate())
+        interaction.modal("Write a description", CreateDescriptionInteraction.ID, roleToggleDescriptionTemplate())
     }
 }
