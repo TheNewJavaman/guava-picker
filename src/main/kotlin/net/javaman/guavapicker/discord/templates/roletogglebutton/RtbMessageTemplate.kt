@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.discord.templates
+package net.javaman.guavapicker.discord.templates.roletogglebutton
 
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.core.builder.components.emoji
@@ -7,10 +7,10 @@ import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.builder.message.create.actionRow
 import dev.kord.rest.builder.message.create.embed
 import net.javaman.guavapicker.discord.embedColor
-import net.javaman.guavapicker.discord.interactions.RoleToggleButtonInteraction
-import net.javaman.guavapicker.dynamodb.items.RoleToggleMessage
+import net.javaman.guavapicker.discord.interactions.roletogglebutton.RtbToggleButtonInteraction
+import net.javaman.guavapicker.dynamodb.items.RtbMessageItem
 
-fun roleToggleMessageTemplate(roleToggleMessage: RoleToggleMessage): MessageCreateBuilder.() -> Unit = {
+fun rtbMessageTemplate(roleToggleMessage: RtbMessageItem): MessageCreateBuilder.() -> Unit = {
     if (roleToggleMessage.header != null || roleToggleMessage.body != null) {
         embed {
             color = embedColor
@@ -29,7 +29,7 @@ fun roleToggleMessageTemplate(roleToggleMessage: RoleToggleMessage): MessageCrea
             for (button in roleToggleMessage.buttons) {
                 interactionButton(
                     ButtonStyle.Secondary,
-                    "${RoleToggleButtonInteraction.ID}-${button.roleId.value}"
+                    "${RtbToggleButtonInteraction.ID}-${button.roleId.value}"
                 ) {
                     button.emoji?.let {
                         emoji(ReactionEmoji.Unicode(it))

@@ -7,9 +7,9 @@ import dev.kord.common.entity.Snowflake
 import kotlin.test.assertEquals
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock.System.now
-import net.javaman.guavapicker.dynamodb.items.RoleToggleButton
-import net.javaman.guavapicker.dynamodb.items.RoleToggleMessage
-import net.javaman.guavapicker.dynamodb.tables.RoleToggleMessagesTable
+import net.javaman.guavapicker.dynamodb.items.RtbButtonItem
+import net.javaman.guavapicker.dynamodb.items.RtbMessageItem
+import net.javaman.guavapicker.dynamodb.roletogglebutton.RtbMessagesTable
 import org.junit.jupiter.api.Test
 
 class DynamoDBTest {
@@ -20,10 +20,10 @@ class DynamoDBTest {
             region = "us-west-1"
         }
         val messageId = Snowflake(now())
-        val original = RoleToggleMessage(
+        val original = RtbMessageItem(
             messageId,
             List(3) {
-                RoleToggleButton(
+                RtbButtonItem(
                     Snowflake(now()),
                     "Label goes here"
                     // Intentionally null emoji string
@@ -32,8 +32,8 @@ class DynamoDBTest {
             "Header goes here",
             // Intentionally null body string
         )
-        RoleToggleMessagesTable.put(original)
-        val saved = RoleToggleMessagesTable.get(messageId)
+        RtbMessagesTable.put(original)
+        val saved = RtbMessagesTable.get(messageId)
         assertEquals(original, saved)
     }
 }

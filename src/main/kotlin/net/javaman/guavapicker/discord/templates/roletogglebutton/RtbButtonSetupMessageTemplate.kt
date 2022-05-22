@@ -1,4 +1,4 @@
-package net.javaman.guavapicker.discord.templates
+package net.javaman.guavapicker.discord.templates.roletogglebutton
 
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.core.entity.Role
@@ -6,9 +6,9 @@ import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.builder.message.create.actionRow
 import dev.kord.rest.builder.message.create.embed
 import net.javaman.guavapicker.discord.embedColor
-import net.javaman.guavapicker.discord.interactions.AddRoleSelectInteraction
+import net.javaman.guavapicker.discord.interactions.roletogglebutton.RtbAddRoleMessageInteraction
 
-fun roleToggleSelectTemplate(messageId: ULong, roles: List<Role>): InteractionResponseCreateBuilder.() -> Unit = {
+fun rtbButtonSetupMessageTemplate(messageId: ULong, roles: List<Role>): InteractionResponseCreateBuilder.() -> Unit = {
     embed {
         color = embedColor
         author {
@@ -16,7 +16,7 @@ fun roleToggleSelectTemplate(messageId: ULong, roles: List<Role>): InteractionRe
         }
     }
     actionRow {
-        selectMenu("${AddRoleSelectInteraction.ID}-$messageId") {
+        selectMenu("${RtbAddRoleMessageInteraction.ID}-$messageId") {
             placeholder = "Select a role"
             for (role in roles) {
                 option(role.name, role.id.value.toString()) {

@@ -20,6 +20,6 @@ infix fun Snowflake?.asAttribute(key: String) = key to AttributeValue.S(this?.va
 
 infix fun String?.asAttribute(key: String) = key to AttributeValue.S(this ?: "")
 
-fun Map<String, AttributeValue>.toAttributeValueMap() = AttributeValue.M(this)
-
 infix fun List<AttributeValue>?.asAttribute(key: String) = key to AttributeValue.L(this ?: emptyList())
+
+fun Map<String, AttributeValue>.toAttribute() = AttributeValue.M(this)

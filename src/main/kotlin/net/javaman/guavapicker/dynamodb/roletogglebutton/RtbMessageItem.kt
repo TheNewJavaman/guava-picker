@@ -7,18 +7,18 @@ import net.javaman.guavapicker.dynamodb.getList
 import net.javaman.guavapicker.dynamodb.getNullableString
 import net.javaman.guavapicker.dynamodb.getSnowflake
 import net.javaman.guavapicker.dynamodb.getString
-import net.javaman.guavapicker.dynamodb.toAttributeValueMap
+import net.javaman.guavapicker.dynamodb.toAttribute
 
-data class RoleToggleMessage(
-    val messageId: Snowflake? = null,
-    val buttons: List<RoleToggleButton> = emptyList(),
+data class RtbMessageItem(
+    val messageId: Snowflake,
+    val buttons: List<RtbButtonItem> = emptyList(),
     val header: String? = null,
     val body: String? = null
 ) {
     companion object {
-        fun fromItem(messageId: Snowflake, item: Map<String, AttributeValue>) = RoleToggleMessage(
+        fun fromItem(messageId: Snowflake, item: Map<String, AttributeValue>) = RtbMessageItem(
             messageId = messageId,
-            buttons = item.getList("buttons") { RoleToggleButton.fromItem((it as AttributeValue.M).value) },
+            buttons = item.getList("buttons") { RtbButtonItem.fromItem((it as AttributeValue.M).value) },
             header = item.getNullableString("header"),
             body = item.getNullableString("body")
         )
@@ -26,28 +26,34 @@ data class RoleToggleMessage(
 
     fun toItem() = mapOf(
         messageId asAttribute "message_id",
-        buttons.map { it.toItem().toAttributeValueMap() } asAttribute "buttons",
+        buttons.map { it.toItem().toAttribute() } asAttribute "buttons",
         header asAttribute "header",
         body asAttribute "body"
     )
 }
 
-data class RoleToggleButton(
+data class RtbButtonItem(
     val roleId: Snowflake,
     val label: String,
-    val emoji: String? = null
+    val emoji: String? = null,
+    val addedConfirmation: String? = null,
+    val removedConfirmation: String? = null,
 ) {
     companion object {
-        fun fromItem(item: Map<String, AttributeValue>) = RoleToggleButton(
+        fun fromItem(item: Map<String, AttributeValue>) = RtbButtonItem(
             roleId = item.getSnowflake("role_id"),
             label = item.getString("label"),
-            emoji = item.getNullableString("emoji")
+            emoji = item.getNullableString("emoji"),
+            addedConfirmation = item.getNullableString("added_confirmation"),
+            removedConfirmation = item.getNullableString("removed_confirmation")
         )
     }
 
     fun toItem() = mapOf(
         roleId asAttribute "role_id",
         label asAttribute "label",
-        emoji asAttribute "emoji"
+        emoji asAttribute "emoji",
+        addedConfirmation asAttribute "added_confirmation",
+        removedConfirmation asAttribute "removed_confirmation"
     )
 }
